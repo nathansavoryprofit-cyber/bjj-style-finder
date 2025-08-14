@@ -48,6 +48,7 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
   <div className="space-y-8 text-left">
     {/* Logo Placeholder */}
 <div className="flex justify-start">
+  {/* Use equal width/height and aspect-square for safety */}
   <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex items-center justify-center">
     <img 
       src={bjjLogo} 
