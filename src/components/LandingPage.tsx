@@ -24,76 +24,56 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-hero-bg via-hero-bg to-primary-glow">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen">
           {/* Left Content */}
-          <div className="space-y-8 text-center lg:text-left">
-            {/* Logo */}
-            <div className="flex justify-center lg:justify-start">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-hero-text/10 backdrop-blur-sm p-3 border border-hero-text/20">
-                <img 
-                  src={bjjLogo} 
-                  alt="BJJ Style Recommender Logo" 
-                  className="w-full h-full object-contain filter invert"
-                />
+          <div className="space-y-8 text-left">
+            {/* Logo Placeholder */}
+            <div className="flex justify-start">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-2 border-foreground/20 bg-muted/30 flex items-center justify-center">
+                <div className="text-muted-foreground text-xs text-center">
+                  Logo
+                  <br />
+                  Placeholder
+                </div>
               </div>
             </div>
 
             {/* Main Heading */}
-            <div className="space-y-4">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-hero-text leading-tight">
-                AI-powered Jiu Jitsu Style{" "}
-                <span className="bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent">
-                  Recommender
-                </span>
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                AI-powered Jiu Jitsu Style Recommender
               </h1>
               
-              <p className="text-lg md:text-xl text-hero-text/80 max-w-2xl mx-auto lg:mx-0">
-                Use Jitsmatchr to gain insights about your most suitable jiu jitsu 
-                playing style while matching your style to pros for easy learning.
+              <p className="text-lg md:text-xl text-foreground/70 max-w-2xl">
+                Use Jitsmatchr to gain AI-driven insights that help you understand your jiu jitsu style and find pros whose game you can learn from
               </p>
             </div>
 
             {/* Email Form */}
-            <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto lg:mx-0">
+            <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
               <div className="space-y-3">
                 <Input
                   type="email"
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-12 bg-hero-text/10 border-hero-text/20 text-hero-text placeholder:text-hero-text/60 backdrop-blur-sm rounded-full px-6"
+                  className="h-12 rounded-full px-6 text-base"
                   required
                 />
                 
                 <Button 
                   type="submit"
-                  variant="hero"
+                  variant="default"
                   size="lg"
                   disabled={isSubmitting || !email.trim()}
-                  className="w-full h-12 text-base"
+                  className="w-full h-12 text-base rounded-full"
                 >
                   {isSubmitting ? "Processing..." : "Register email for software access"}
                 </Button>
               </div>
             </form>
-
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-hero-text/60">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span>AI-Powered Analysis</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span>Pro Player Matching</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span>Personalized Training</span>
-              </div>
-            </div>
           </div>
 
           {/* Right Content - Mobile Mockup */}
@@ -109,24 +89,24 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
                       <div className="flex gap-1">
                         <div className="w-1 h-3 bg-white rounded-full"></div>
                         <div className="w-1 h-3 bg-white rounded-full"></div>
-                        <div className="w-1 h-3 bg-white/50 rounded-full"></div>
+                        <div className="w-1 h-3 bg-white rounded-full"></div>
                         <div className="w-1 h-3 bg-white/50 rounded-full"></div>
                       </div>
-                      <div className="w-6 h-3 border border-white rounded-sm">
-                        <div className="w-4 h-2 bg-white rounded-sm m-0.5"></div>
+                      <div className="w-6 h-3 border border-white rounded-sm relative">
+                        <div className="w-4 h-2 bg-white rounded-sm absolute top-0.5 left-0.5"></div>
                       </div>
                     </div>
                   </div>
 
                   {/* Video Placeholder */}
-                  <div className="flex-1 bg-gradient-to-br from-hero-bg to-primary flex items-center justify-center">
+                  <div className="flex-1 bg-gray-900 flex items-center justify-center">
                     <div className="text-center space-y-4">
-                      <div className="w-20 h-20 bg-hero-text/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                        <Play className="w-8 h-8 text-hero-text ml-1" />
+                      <div className="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center">
+                        <Play className="w-8 h-8 text-white ml-1" />
                       </div>
-                      <div className="text-hero-text/80 text-sm px-8">
-                        <p className="font-medium">BJJ Style Analysis</p>
-                        <p className="text-xs mt-1">See how AI matches your style</p>
+                      <div className="text-white/80 text-sm px-8">
+                        <p className="font-medium">Video Placeholder</p>
+                        <p className="text-xs mt-1">Content will be added later</p>
                       </div>
                     </div>
                   </div>
@@ -137,19 +117,9 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
                   </div>
                 </div>
               </div>
-
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-accent rounded-full animate-pulse"></div>
-              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-accent-glow rounded-full animate-pulse delay-300"></div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-glow/10 rounded-full blur-3xl"></div>
       </div>
     </div>
   );
