@@ -43,12 +43,12 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen">
-          {/* Left Content */}
-          <div className="space-y-8 text-left">
-            {/* Logo Placeholder */}
-          <div className="flex justify-start">
-  <div className="w-27 h-24 md:w-32 md:h-32 rounded-full border-2 border-foreground/20 bg-muted/30 overflow-hidden flex items-center justify-center">
+       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen">
+  {/* Left Content */}
+  <div className="space-y-8 text-left">
+    {/* Logo Placeholder */}
+<div className="flex justify-start">
+  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex items-center justify-center">
     <img 
       src={bjjLogo} 
       alt="BJJ Logo" 
