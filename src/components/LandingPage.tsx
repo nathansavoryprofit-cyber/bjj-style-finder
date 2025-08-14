@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Play } from "lucide-react";
 import bjjLogo from "@/assets/bjj-logo.png";
+import { supabase } from "@/integrations/supabase/client";
 
 interface LandingPageProps {
   onEmailSubmit: (email: string) => void;
@@ -17,10 +18,26 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
     if (!email.trim()) return;
     
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    onEmailSubmit(email);
-    setIsSubmitting(false);
+    
+    try {
+      // Save email to Supabase
+      const { error } = await supabase
+        .from('emails')
+        .insert({ email: email.trim() });
+        
+      if (error) {
+        console.error('Error saving email:', error);
+        // Continue anyway to not block the user experience
+      }
+      
+      onEmailSubmit(email);
+    } catch (error) {
+      console.error('Error:', error);
+      // Continue anyway to not block the user experience
+      onEmailSubmit(email);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
