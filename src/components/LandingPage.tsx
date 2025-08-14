@@ -47,15 +47,15 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
           {/* Left Content */}
           <div className="space-y-8 text-left">
             {/* Logo Placeholder */}
-            <div className="flex justify-start">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-2 border-foreground/20 bg-muted/30 flex items-center justify-center">
-                <div className="text-muted-foreground text-xs text-center">
-                  Logo
-                  <br />
-                  Placeholder
-                </div>
-              </div>
-            </div>
+          <div className="flex justify-start">
+  <div className="w-27 h-24 md:w-32 md:h-32 rounded-full border-2 border-foreground/20 bg-muted/30 overflow-hidden flex items-center justify-center">
+    <img 
+      src={bjjLogo} 
+      alt="BJJ Logo" 
+      className="w-full h-full object-cover"
+    />
+  </div>
+</div>
 
             {/* Main Heading */}
             <div className="space-y-6">
