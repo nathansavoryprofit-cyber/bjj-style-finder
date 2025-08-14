@@ -366,8 +366,7 @@ export default function BJJRecommender({ userEmail, onBack }: BJJRecommenderProp
             </div>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight">BJJ Style & Pro Recommender</h1>
           </div>
-          <div className="text-xs md:text-sm text-muted-foreground">Clean, modern, and opinionated • Scores 1–100</div>
-        </header>
+         </header>
 
         {/* Collapsible Style Guide Panel */}
         <StyleGuidePanel />
