@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Play } from "lucide-react";
 import bjjLogo from "@/assets/bjj-logo.png";
+import videoAsset from "@/assets/video.mp4";
 import { supabase } from "@/integrations/supabase/client";
 
 interface LandingPageProps {
@@ -115,18 +116,16 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
                     </div>
                   </div>
 
-                  {/* Video Placeholder */}
-                  <div className="flex-1 bg-gray-900 flex items-center justify-center">
-                    <div className="text-center space-y-4">
-                      <div className="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center">
-                        <Play className="w-8 h-8 text-white ml-1" />
-                      </div>
-                      <div className="text-white/80 text-sm px-8">
-                        <p className="font-medium">Video Placeholder</p>
-                        
-                        <p className="text-xs mt-1">Content will be added later</p>
-                      </div>
-                    </div>
+                  {/* Video */}
+                  <div className="flex-1 bg-black overflow-hidden">
+                    <video 
+                      src={videoAsset}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
                   {/* Home Indicator */}
