@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Play } from "lucide-react";
@@ -13,6 +13,25 @@ interface LandingPageProps {
 export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [videoStarted, setVideoStarted] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleVideoPlay = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play()
+        .then(() => setVideoStarted(true))
+        .catch(error => console.error("Video play failed:", error));
+    }
+  };
+
+  // Auto-play muted video when component mounts
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => console.log("Autoplay prevented:", error));
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,20 +40,17 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
     setIsSubmitting(true);
     
     try {
-      // Save email to Supabase
       const { error } = await supabase
         .from('emails')
         .insert({ email: email.trim() });
         
       if (error) {
         console.error('Error saving email:', error);
-        // Continue anyway to not block the user experience
       }
       
       onEmailSubmit(email);
     } catch (error) {
       console.error('Error:', error);
-      // Continue anyway to not block the user experience
       onEmailSubmit(email);
     } finally {
       setIsSubmitting(false);
@@ -44,20 +60,19 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen">
-  {/* Left Content */}
-  <div className="space-y-8 text-left">
-    {/* Logo Placeholder */}
-<div className="flex justify-start">
-  {/* Use equal width/height and aspect-square for safety */}
-  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex items-center justify-center">
-    <img 
-      src={bjjLogo} 
-      alt="BJJ Logo" 
-      className="w-full h-full object-cover"
-    />
-  </div>
-</div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen">
+          {/* Left Content */}
+          <div className="space-y-8 text-left">
+            {/* Logo */}
+            <div className="flex justify-start">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex items-center justify-center">
+                <img 
+                  src={bjjLogo} 
+                  alt="BJJ Logo" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
 
             {/* Main Heading */}
             <div className="space-y-6">
@@ -66,8 +81,8 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
               </h1>
               
               <p className="text-lg md:text-xl text-foreground/70 max-w-2xl">
-By deeply analysing your personal attributes, JITSMATCHR’s AI reveals your optimal jiu jitsu style, pairs you with pros who share your build and game, and accelerates your path to mastering your most effective style.
-            </p>
+                By deeply analysing your personal attributes, JITSMATCHR's AI reveals your optimal jiu jitsu style, pairs you with pros who share your build and game, and accelerates your path to mastering your most effective style.
+              </p>
             </div>
 
             {/* Email Form */}
@@ -82,15 +97,15 @@ By deeply analysing your personal attributes, JITSMATCHR’s AI reveals your opt
                   required
                 />
                 
-               <Button 
-  type="submit"
-  variant="default"
-  size="lg"
-  disabled={isSubmitting || !email.trim()}
-  className="w-full h-12 text-base rounded-full bg-red-100 hover:bg-red-200 text-red-800"
->
-  {isSubmitting ? "Processing..." : "Register email for access"}
-</Button>
+                <Button 
+                  type="submit"
+                  variant="default"
+                  size="lg"
+                  disabled={isSubmitting || !email.trim()}
+                  className="w-full h-12 text-base rounded-full bg-red-100 hover:bg-red-200 text-red-800"
+                >
+                  {isSubmitting ? "Processing..." : "Register email for access"}
+                </Button>
               </div>
             </form>
           </div>
@@ -117,15 +132,34 @@ By deeply analysing your personal attributes, JITSMATCHR’s AI reveals your opt
                     </div>
                   </div>
 
-                  {/* Video */}
-                  <div className="flex-1 bg-black overflow-hidden">
+                  {/* Video Container */}
+                  <div className="relative w-full h-full">
                     <video 
+                      ref={videoRef}
                       src={videoAsset}
-                      autoPlay
                       loop
                       playsInline
-                      className="w-full h-full object-cover"
+                      muted={!videoStarted}
+                      preload="auto"
+                      className={`w-full h-full object-cover ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      onLoadedData={() => setIsVideoLoaded(true)}
+                      onClick={handleVideoPlay}
                     />
+                    
+                    {(!videoStarted || !isVideoLoaded) && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                        {isVideoLoaded ? (
+                          <button 
+                            onClick={handleVideoPlay}
+                            className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm transition-all hover:scale-110"
+                          >
+                            <Play className="w-8 h-8 text-white fill-white" />
+                          </button>
+                        ) : (
+                          <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Home Indicator */}
