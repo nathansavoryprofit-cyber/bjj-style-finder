@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import bjjLogo from "@/assets/bjj-logo.png";
 
 // --- Helper data -----------------------------------------------------------
 const STYLES = [
@@ -355,18 +356,29 @@ export default function BJJRecommender({ userEmail, onBack }: BJJRecommenderProp
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       <div className="mx-auto max-w-6xl px-4 py-8">
-        <header className="mb-6 flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-4 mb-2">
-              <Button variant="ghost" size="sm" onClick={onBack}>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Badge>Logged in: {userEmail}</Badge>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">BJJ Style & Pro Recommender</h1>
+        <header className="mb-6">
+          <div className="flex items-center gap-4 mb-4">
+            <Button variant="ghost" size="sm" onClick={onBack}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <Badge>Logged in: {userEmail}</Badge>
           </div>
-         </header>
+          <div className="flex items-center gap-4 mb-2">
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden flex items-center justify-center">
+              <img 
+                src={bjjLogo} 
+                alt="BJJ Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex-1">
+              <h1 className="text-2xl md:text-4xl font-bold tracking-tight">
+                JITSMATCHR - The AI Driven Jiu Jitsu Style Matcher
+              </h1>
+            </div>
+          </div>
+        </header>
 
         {/* Collapsible Style Guide Panel */}
         <StyleGuidePanel />
@@ -405,7 +417,7 @@ export default function BJJRecommender({ userEmail, onBack }: BJJRecommenderProp
                       variant={gi === opt ? "default" : "outline"}
                       size="sm"
                       onClick={() => setGi(opt)}
-                      className="rounded-xl"
+                      className={`rounded-xl ${gi === opt ? 'bg-red-100 hover:bg-red-200 text-red-800 border-red-200' : 'hover:bg-red-50 hover:text-red-700 hover:border-red-200'}`}
                     >
                       {opt.toUpperCase()}
                     </Button>
@@ -441,7 +453,6 @@ export default function BJJRecommender({ userEmail, onBack }: BJJRecommenderProp
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">{s.description}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <LinkChip href={links.bjjHeroes}>BJJ Heroes</LinkChip>
                       <LinkChip href={links.bjjFanatics}>BJJ Fanatics</LinkChip>
                       <LinkChip href={links.youtube}>YouTube</LinkChip>
                     </div>
@@ -480,11 +491,11 @@ export default function BJJRecommender({ userEmail, onBack }: BJJRecommenderProp
           <h2 className="text-base md:text-lg font-bold mb-2 text-card-foreground">How your recommendations are calculated</h2>
           <ul className="list-disc pl-6 text-sm text-muted-foreground space-y-1">
             <li><span className="font-medium">Body type</span> is inferred from height & weight (rough BMI heuristic) to bias style archetypes.</li>
-            <li><span className="font-medium">Gi/No-Gi</span> preference nudges styles (lapel/lasso in Gi; leg locks & wrestling in No-Gi) and has a <span className="font-medium">strong impact</span> in pro matching.</li>
+            <li><span className="font-medium">Gi/No-Gi preference</span> styles</li>
             <li><span className="font-medium">Athletic ability</span> (1–10) is matched against each style's demand to find the best fits.</li>
-            <li><span className="font-medium">Height & weight signals</span> now directly influence style picks (e.g., tall → lapels/open guard; heavy → pressure/mount; light → speed/legs).</li>
-            <li><span className="font-medium">Pro scores</span> combine: style fit, weight proximity, style overlap, gi alignment (boosted), and body-type bonus.</li>
-            <li>Each list shows a <span className="font-medium">1–100</span> score; numbers are algorithmic estimates for exploration.</li>
+            <li><span className="font-medium">Height & weight signal</span> directly influence style picks</li>
+            <li><span className="font-medium">Pro scores</span> combine: style fit, weight proximity, style overlap, gi / no-gi alignment, and body-type bonus.</li>
+            <li>Each list shows a <span className="font-medium">1–100</span> score; numbers are algorithmic calculations from JITSMATCHR's wizard.</li>
           </ul>
         </section>
 
@@ -541,12 +552,25 @@ interface RankedListProps {
 }
 
 function RankedList({ title, items, scoreKey }: RankedListProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const top50 = items.slice(0, 50);
+  const displayItems = isExpanded ? top50 : top50.slice(0, 10);
+  
   return (
     <div className="rounded-2xl border bg-card p-4 shadow-sm">
-      <h3 className="text-sm md:text-base font-semibold mb-2 text-card-foreground">{title}</h3>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-sm md:text-base font-semibold text-card-foreground">{title}</h3>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="text-xs"
+        >
+          {isExpanded ? "Show Less" : `Show All ${top50.length}`}
+        </Button>
+      </div>
       <ol className="space-y-1">
-        {top50.map((p, idx) => {
+        {displayItems.map((p, idx) => {
           const links = proLinks(p.name);
           return (
             <li key={p.name} className="flex flex-col gap-1 rounded-lg border p-2 hover:bg-muted/50 transition-colors">
