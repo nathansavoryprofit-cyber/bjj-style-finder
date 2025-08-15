@@ -61,12 +61,11 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
             {/* Main Heading */}
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                AI-powered Jiu Jitsu Style Recommender
+                AI-Powered Jiu Jitsu Style Matcher
               </h1>
               
               <p className="text-lg md:text-xl text-foreground/70 max-w-2xl">
-                Use Jitsmatchr to gain AI-driven insights that help you understand your jiu jitsu style and find pros whose game you can learn from
-              </p>
+           By deeply analysing your personal attributes, JITSMATCHR’s AI reveals optimal jiu jitsu style, pairs you with pros who share your build and game, and accelerates your path to mastering your most effective style.    </p>
             </div>
 
             {/* Email Form */}
@@ -81,15 +80,15 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
                   required
                 />
                 
-                <Button 
-                  type="submit"
-                  variant="default"
-                  size="lg"
-                  disabled={isSubmitting || !email.trim()}
-                  className="w-full h-12 text-base rounded-full"
-                >
-                  {isSubmitting ? "Processing..." : "Register email for software access"}
-                </Button>
+               <Button 
+  type="submit"
+  variant="default"
+  size="lg"
+  disabled={isSubmitting || !email.trim()}
+  className="w-full h-12 text-base rounded-full bg-red-100 hover:bg-red-200 text-red-800"
+>
+  {isSubmitting ? "Processing..." : "Register email for access"}
+</Button>
               </div>
             </form>
           </div>
@@ -124,6 +123,7 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
                       </div>
                       <div className="text-white/80 text-sm px-8">
                         <p className="font-medium">Video Placeholder</p>
+                        
                         <p className="text-xs mt-1">Content will be added later</p>
                       </div>
                     </div>
