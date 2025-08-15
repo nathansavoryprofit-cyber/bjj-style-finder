@@ -66,7 +66,8 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
               </h1>
               
               <p className="text-lg md:text-xl text-foreground/70 max-w-2xl">
-           By deeply analysing your personal attributes, JITSMATCHR’s AI reveals optimal jiu jitsu style, pairs you with pros who share your build and game, and accelerates your path to mastering your most effective style.    </p>
+By deeply analysing your personal attributes, JITSMATCHR’s AI reveals your optimal jiu jitsu style, pairs you with pros who share your build and game, and accelerates your path to mastering your most effective style.
+            </p>
             </div>
 
             {/* Email Form */}
@@ -121,7 +122,6 @@ export default function LandingPage({ onEmailSubmit }: LandingPageProps) {
                     <video 
                       src={videoAsset}
                       autoPlay
-                      muted
                       loop
                       playsInline
                       className="w-full h-full object-cover"
